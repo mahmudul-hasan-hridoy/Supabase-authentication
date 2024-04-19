@@ -21,4 +21,4 @@
 # Ignore system files
 .DS_Store
 Thumbs.db
-node_module
+node_modules
