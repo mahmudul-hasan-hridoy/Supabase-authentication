@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import supabase from "@/lib/supabase";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button" 
 import {
   Card,
   CardContent,
@@ -12,13 +12,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input" 
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleSignin = async (e) => {
     e.preventDefault();
@@ -28,10 +30,18 @@ export default function Signin() {
     });
 
     if (error) {
-      console.error("Error signing in:", error.message);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
     } else {
-      console.log("User signed in successfully");
-      router.push("/");
+      toast({
+        title: "Success",
+        description: "You have signed in successfully",
+        variant: "default",
+      });
+      
     }
   };
 
@@ -41,9 +51,17 @@ export default function Signin() {
     });
 
     if (error) {
-      console.error("Error signing in with Google:", error.message);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
     } else {
-      console.log("User signed in with Google successfully");
+      toast({
+        title: "Success",
+        description: "You have signed in with Google successfully",
+        variant: "default",
+      });
       router.push("/");
     }
   };
@@ -54,13 +72,20 @@ export default function Signin() {
     });
 
     if (error) {
-      console.error("Error signing in with GitHub:", error.message);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
     } else {
-      console.log("User signed in with GitHub successfully");
+      toast({
+        title: "Success",
+        description: "You have signed in with GitHub successfully",
+        variant: "default",
+      });
       router.push("/");
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <Card className="max-w-md w-full">
@@ -119,7 +144,7 @@ export default function Signin() {
           >
             Sign in
           </Button>
-          <Link href="/auth/signup" className="mt-3 text-center">
+          <Link href="/signup" className="mt-3 text-center">
             Create an account
           </Link>
         </CardFooter>
