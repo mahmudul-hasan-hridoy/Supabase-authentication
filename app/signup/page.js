@@ -21,7 +21,6 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const { toast } = useToast();
-
   const handleSignup = async (e) => {
     e.preventDefault();
     const { user, error } = await supabase.auth.signUp({
@@ -30,9 +29,17 @@ export default function Signup() {
     });
 
     if (error) {
-      console.error("Error signing up:", error.message);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
     } else {
-      console.log("User signed up successfully");
+      toast({
+        title: "Success",
+        description: "User signed up successfully",
+        variant: "default",
+      });
       router.push("/signin");
     }
   };
@@ -43,9 +50,17 @@ export default function Signup() {
     });
 
     if (error) {
-      console.error("Error signing up with Google:", error.message);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
     } else {
-      console.log("User signed up with Google successfully");
+      toast({
+        title: "Success",
+        description: "User signed up with Google successfully",
+        variant: "default",
+      });
       router.push("/");
     }
   };
@@ -56,9 +71,17 @@ export default function Signup() {
     });
 
     if (error) {
-      console.error("Error signing up with GitHub:", error.message);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
     } else {
-      console.log("User signed up with GitHub successfully");
+      toast({
+        title: "Success",
+        description: "User signed up with GitHub successfully",
+        variant: "default",
+      });
       router.push("/");
     }
   };
