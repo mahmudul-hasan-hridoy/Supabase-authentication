@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 
 export default function Signup() {
+  const [fullName, setFullName] = useState(""); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -26,6 +27,11 @@ export default function Signup() {
     const { user, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+      data: {
+        full_name: fullName, // Include the full name in the user metadata
+      },
+      },
     });
 
     if (error) {
@@ -115,6 +121,15 @@ export default function Signup() {
           <form className="mt-8 space-y-6" onSubmit={handleSignup}>
             <Input type="hidden" name="remember" value="true" />
             <div className="rounded-md shadow-sm -space-y-px flex flex-col gap-5">
+              <Input
+                id="full-name"
+                type="text"
+                autoComplete="name"
+                required
+                placeholder="Full Name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
               <Input
                 id="email-address"
                 type="email"
