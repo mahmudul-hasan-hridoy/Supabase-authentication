@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import supabase from "@/utils/supabase";
+import Image from 'next/image';
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -53,10 +54,11 @@ export default function Dashboard() {
       <h1>Dashboard</h1>
       <div>
         {user.user_metadata.picture && (
-          <img
-            src={user.user_metadata.picture}
+          <Image
+            src={user.user_metadata.picture || user.user_metadata.avatar_url}
             alt="User Avatar"
-            style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+            width={500}
+            height={500}
           />
         )}
         <p>Welcome, {user.email}</p>
