@@ -97,7 +97,11 @@ export default function Navbar() {
             </PopoverContent>
           </Popover>
         ) : (
-          <Button onClick={() => router.push("/signup")} variant="outline">
+          <Button
+            onClick={() => router.push("/signup")}
+            variant="outline"
+            className="text-black dark:text-white"
+          >
             Sign Up
           </Button>
         )}
