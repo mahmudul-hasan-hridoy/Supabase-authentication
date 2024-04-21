@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import supabase from "@/utils/supabase";
-import Image from 'next/image';
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -46,28 +47,32 @@ export default function Dashboard() {
   };
 
   if (!user) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading...
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <div>
+    <div className="text-center">
+      <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
+      <div className="flex flex-col items-center">
         {user.user_metadata.picture && (
-          <Image
-            src={user.user_metadata.picture || user.user_metadata.avatar_url}
+          <img
+            src={user.user_metadata.picture}
             alt="User Avatar"
-            width={500}
-            height={500}
+            style={{ width: "50px", height: "50px", borderRadius: "50%" }}
           />
         )}
-        <p>Welcome, {user.email}</p>
-        <p>User ID: {user.id}</p>
+        <p className="mt-2">Welcome, {user.email}</p>
         {user.user_metadata.provider && (
           <p>Sign-up Provider: {user.user_metadata.provider}</p>
         )}
       </div>
-      <button onClick={handleLogout}>Logout</button>
+      <Button onClick={handleLogout} variant="secondary" className="mt-3">
+        Logout
+      </Button>
     </div>
   );
-} 
+}

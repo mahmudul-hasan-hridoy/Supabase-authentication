@@ -18,6 +18,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { ModeToggle } from "./modetoogle";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
@@ -59,10 +60,10 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex items-center justify-between py-4 px-6 bg-white shadow-md">
+    <nav className="flex items-center justify-between py-4 px-6 bg-white dark:bg-gray-800 shadow-md">
       <div>
-        <a href="/" className="text-2xl font-bold">
-          My App
+        <a href="/" className="text-2xl font-bold text-black dark:text-white">
+          Supabase
         </a>
       </div>
       <div className="flex items-center gap-3">
@@ -102,9 +103,24 @@ export default function Navbar() {
         )}
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline">Open</Button>
+            <Button variant="outline" size="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 text-black dark:text-white"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+            </Button>
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent side="left">
             <SheetHeader>
               <SheetTitle>Edit profile</SheetTitle>
               <SheetDescription>
@@ -113,6 +129,7 @@ export default function Navbar() {
             </SheetHeader>
           </SheetContent>
         </Sheet>
+        <ModeToggle />
       </div>
     </nav>
   );
