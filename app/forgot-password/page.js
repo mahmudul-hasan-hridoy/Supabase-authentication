@@ -1,20 +1,21 @@
-// pages/forgot-password.js
 "use client";
+
 import { useState } from "react";
 import supabase from "@/utils/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
+import { Loader } from "lucide-react";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const { toast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setMessage("");
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -22,12 +23,25 @@ export default function ForgotPassword() {
       });
 
       if (error) {
-        setMessage(`Error: ${error.message}`);
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
       } else {
-        setMessage("Password reset link has been sent to your email address.");
+        toast({
+          title: "Success",
+          description:
+            "Password reset link has been sent to your email address.",
+          variant: "default",
+        });
       }
     } catch (err) {
-      setMessage(`Error: ${err.message}`);
+      toast({
+        title: "Error",
+        description: err.message,
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -51,13 +65,14 @@ export default function ForgotPassword() {
             required
           />
         </div>
-        <Button type="submit" isLoading={isLoading}>
-          {isLoading ? "Sending..." : "Send Reset Link"}
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? (
+            <Loader className="w-6 h-6 animate-spin" />
+          ) : (
+            "Send Reset Link"
+          )}
         </Button>
       </form>
-      {message && (
-        <p className="mt-4 text-sm text-red-600 dark:text-red-500">{message}</p>
-      )}
     </div>
   );
 }

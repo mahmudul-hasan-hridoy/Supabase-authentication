@@ -14,16 +14,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import { Loader, Eye, EyeOff } from "lucide-react";
 
 export default function Signin() {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
 
   const handleSignin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -42,6 +47,7 @@ export default function Signin() {
         variant: "default",
       });
     }
+    setIsLoading(false);
   };
 
   const handleGoogleSignin = async () => {
@@ -85,7 +91,11 @@ export default function Signin() {
       router.push("/");
     }
   };
-  
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black py-12 px-4 sm:px-6 lg:px-8">
       <Card className="max-w-md w-full">
@@ -117,24 +127,56 @@ export default function Signin() {
           <form className="mt-8 space-y-6" onSubmit={handleSignin}>
             <Input type="hidden" name="remember" value="true" />
             <div className="rounded-md shadow-sm -space-y-px flex flex-col gap-5">
-              <Input
-                id="email-address"
-                type="email"
-                autoComplete="email"
-                required
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <Input
-                id="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div>
+                <Label htmlFor="email-address">Email address</Label>
+                <Input
+                  id="email-address"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  placeholder="Email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div>
+                <div className="flex justify-between">
+                  <Label
+                    className="block text-sm font-medium"
+                    htmlFor="password"
+                  >
+                    Password
+                  </Label>
+                  <Link
+                    className="text-sm text-black dark:text-gray-400 hover:underline"
+                    href="forgot-password"
+                  >
+                    Forgot Password?
+                  </Link>
+                </div>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
+                    required
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleTogglePassword}
+                    className="absolute inset-y-0 right-0 px-3 flex items-center focus:outline-none"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5 text-gray-500" />
+                    ) : (
+                      <Eye className="h-5 w-5 text-gray-500" />
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
           </form>
         </CardContent>
@@ -143,12 +185,17 @@ export default function Signin() {
             type="submit"
             onClick={handleSignin}
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            disabled={isLoading}
           >
-            Sign in
+            {isLoading ? (
+              <Loader className="w-6 h-6 animate-spin" />
+            ) : (
+              "Sign in"
+            )}
           </Button>
           <span className="text-sm text-black dark:text-white text-center">
             Don't have an account?
-            <Link href="/signin" className="mt-3 mx-2 hover:underline">
+            <Link href="/signup" className="mt-3 mx-2 hover:underline">
               Sign Up
             </Link>{" "}
           </span>
