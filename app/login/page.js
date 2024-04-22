@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader, Eye, EyeOff } from "lucide-react";
 
-export default function Signin() {
+  export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -124,7 +124,10 @@ export default function Signin() {
               Sign in with GitHub
             </Button>
           </div>
-          <form className="mt-8 space-y-6" onSubmit={handleSignin}>
+          <form
+            className="mt-8 space-y-6"
+            onSubmit={handleSignin}
+          >
             <Input type="hidden" name="remember" value="true" />
             <div className="rounded-md shadow-sm -space-y-px flex flex-col gap-5">
               <div>
@@ -133,8 +136,8 @@ export default function Signin() {
                   id="email-address"
                   type="email"
                   autoComplete="email"
-                  required
                   placeholder="Email address"
+                  required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -159,8 +162,8 @@ export default function Signin() {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
-                    required
                     placeholder="••••••••"
+                    required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -178,21 +181,20 @@ export default function Signin() {
                 </div>
               </div>
             </div>
+            <Button
+              type="submit"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader className="w-6 h-6 animate-spin" />
+              ) : (
+                "Sign in"
+              )}
+            </Button>
           </form>
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
-          <Button
-            type="submit"
-            onClick={handleSignin}
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <Loader className="w-6 h-6 animate-spin" />
-            ) : (
-              "Sign in"
-            )}
-          </Button>
           <span className="text-sm text-black dark:text-white text-center">
             Don't have an account?
             <Link href="/signup" className="mt-3 mx-2 hover:underline">
@@ -204,6 +206,7 @@ export default function Signin() {
     </div>
   );
 }
+
 function GithubIcon(props) {
   return (
     <svg

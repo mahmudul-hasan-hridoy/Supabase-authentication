@@ -1,5 +1,5 @@
 "use client";
-
+import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -124,11 +124,12 @@ export default function Navbar() {
               </svg>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left">
+          <SheetContent side="left" className="text-black dark:text-white">
             <SheetHeader>
-              <SheetTitle>Edit profile</SheetTitle>
               <SheetDescription>
-                Make changes to your profile here. Click save when you're done.
+                <Link href="/signup" >
+                  Sign up
+                </Link>
               </SheetDescription>
             </SheetHeader>
           </SheetContent>
