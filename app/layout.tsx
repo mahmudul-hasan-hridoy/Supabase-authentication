@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
+import { cn } from "@/lib/utils";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,8 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-white text-black dark:bg-gray-900 text-white">       
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          inter.className,
+          "bg-background overflow-x-hidden font-sans antialiased",
+        )}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

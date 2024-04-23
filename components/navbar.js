@@ -1,5 +1,6 @@
 "use client";
-import Link from 'next/link';
+
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -9,13 +10,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import supabase from "@/utils/supabase";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ModeToggle } from "./modetoogle";
@@ -23,7 +23,7 @@ import { ModeToggle } from "./modetoogle";
 export default function Navbar() {
   const [user, setUser] = useState(null);
   const [subscription, setSubscription] = useState(null);
-  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const getUser = async () => {
@@ -60,7 +60,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex items-center justify-between py-4 px-6 bg-white dark:bg-gray-800 shadow-md">
+    <nav className="flex items-center justify-between py-4 px-6 bg-background shadow-md">
       <div>
         <a href="/" className="text-2xl font-bold text-black dark:text-white">
           Supabase
@@ -97,12 +97,8 @@ export default function Navbar() {
             </PopoverContent>
           </Popover>
         ) : (
-          <Button
-            onClick={() => router.push("/signup")}
-            variant="outline"
-            className="text-black dark:text-white"
-          >
-            Sign Up
+          <Button variant="outline" className="text-black dark:text-white">
+            <Link href="/signup">Sign Up</Link>
           </Button>
         )}
         <Sheet>
@@ -124,12 +120,36 @@ export default function Navbar() {
               </svg>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="text-black dark:text-white">
+          <SheetContent side="left">
             <SheetHeader>
-              <SheetDescription>
-                <Link href="/signup" >
-                  Sign up
-                </Link>
+              <SheetDescription className="block flex flex-col gap-2 mt-5">
+                <Button
+                  asChild
+                  variant="outline"
+                  className={`w-full ${
+                    pathname === "/" ? "bg-indigo-500 text-white" : ""
+                  }`}
+                >
+                  <Link href="/login">Home</Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className={`w-full ${
+                    pathname === "/login" ? "bg-indigo-500 text-white" : ""
+                  }`}
+                >
+                  <Link href="/login">Login</Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className={`w-full ${
+                    pathname === "/signup" ? "bg-indigo-500 text-white" : ""
+                  }`}
+                >
+                  <Link href="/signup">Sign Up</Link>
+                </Button>
               </SheetDescription>
             </SheetHeader>
           </SheetContent>
