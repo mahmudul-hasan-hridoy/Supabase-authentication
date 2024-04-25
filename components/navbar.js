@@ -9,7 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import supabase from "@/utils/supabase";
+import supabase from "@/lib/supabase";
 import { usePathname } from "next/navigation";
 import {
   Sheet,
@@ -18,6 +18,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { AlignJustify } from "lucide-react";
 import { ModeToggle } from "./modetoogle";
 
 export default function Navbar() {
@@ -104,20 +105,7 @@ export default function Navbar() {
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 text-black dark:text-white"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
+              <AlignJustify />
             </Button>
           </SheetTrigger>
           <SheetContent side="left">

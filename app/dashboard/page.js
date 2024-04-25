@@ -59,10 +59,12 @@ export default function Dashboard() {
       <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
       <div className="flex flex-col items-center">
         {user.user_metadata.picture && (
-          <img
+          <Image
+            className="rounded-full"
             src={user.user_metadata.picture}
             alt="User Avatar"
-            style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+            width={150}
+            height={150}
           />
         )}
         <p className="mt-2">Welcome, {user.email}</p>
@@ -70,7 +72,7 @@ export default function Dashboard() {
           <p>Sign-up Provider: {user.user_metadata.provider}</p>
         )}
       </div>
-      <Button onClick={handleLogout} variant="secondary" className="mt-3">
+      <Button onClick={handleLogout} variant="destructive" className="mt-3">
         Logout
       </Button>
     </div>
