@@ -8,10 +8,7 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get("type") as EmailOtpType | null;
   const next = searchParams.get("next") ?? "/";
 
-  const redirectTo = new URL(
-    "https://e8c23b91-ac82-4951-a500-003ac00f116c-00-126wq0c9hxq7h.worf.replit.dev" +
-      next,
-  );
+  const redirectTo = new URL(`${process.env.SITE_URL}` + next);
   redirectTo.searchParams.delete("token_hash");
   redirectTo.searchParams.delete("type");
 
