@@ -5,10 +5,13 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import supabase from "@/lib/supabase";
 import { usePathname } from "next/navigation";
 import {
@@ -18,7 +21,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { AlignJustify } from "lucide-react";
+import { AlignJustify, Settings, LogOut } from "lucide-react";
 import { ModeToggle } from "./modetoogle";
 
 export default function Navbar() {
@@ -69,8 +72,8 @@ export default function Navbar() {
       </div>
       <div className="flex items-center gap-3">
         {user ? (
-          <Popover>
-            <PopoverTrigger>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
               <Avatar>
                 <AvatarImage
                   src={
@@ -86,17 +89,35 @@ export default function Navbar() {
                     .toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-            </PopoverTrigger>
-            <PopoverContent className="p-4">
-              <p className="mb-2">
-                Name: {user.user_metadata.full_name || user.email}
-              </p>
-              <p className="mb-2">Email: {user.email}</p>
-              <Button onClick={handleLogout} variant="destructive">
-                Logout
-              </Button>
-            </PopoverContent>
-          </Popover>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="p-4">
+              <DropdownMenuLabel>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">
+                    {user.user_metadata.full_name || user.email}
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {user.email}
+                  </span>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem>
+              <Settings className="mr-1"/>
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <button
+                  onClick={handleLogout}
+                  className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                >
+                  <LogOut className="mr-1" />
+                  Log out                 
+                </button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
           <Button variant="outline" className="text-black dark:text-white">
             <Link href="/signup">Sign Up</Link>
